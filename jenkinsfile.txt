@@ -1,0 +1,33 @@
+
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build') {
+            steps {
+                echo 'Build Successful'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing Completed'
+            }
+        }
+
+        stage('SAST') {
+            steps {
+                sh 'pip install bandit'
+                sh 'bandit -r .'
+            }
+        }
+
+        stage('SCA') {
+            steps {
+                sh 'pip install pip-audit'
+                sh 'pip-audit -r requirements.txt'
+            }
+        }
+    }
+}
